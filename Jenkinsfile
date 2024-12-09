@@ -12,8 +12,7 @@ pipeline {
 
             steps {
                 sh '''
-                curl -fsSL https://github.com/mlocati/docker-php-extension-installer/raw/master/install-php-extensions.sh -o /usr/local/bin/install-php-extensions \
-                && chmod +x /usr/local/bin/install-php-extensions
+                curl -fsSL https://github.com/mlocati/docker-php-extension-installer/raw/master/install-php-extensions.sh -o /usr/local/bin/install-php-extensions
                 install-php-extensions intl gd xsl pcov
                 cp .env.example .env && \
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
