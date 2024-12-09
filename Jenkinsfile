@@ -1,15 +1,13 @@
 pipeline {
-    agent none
-
-    stages {
-        stage('PHP Test') {
-            agent {
+    agent {
                 docker {
                     image 'serversideup/php:8.3-cli'
                     args '--user root'
                 }
             }
 
+    stages {
+        stage('installing required packages') {
             steps {
                 sh '''
                 install-php-extensions intl gd xsl pcov
@@ -17,12 +15,14 @@ pipeline {
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
                 composer install --no-interaction --prefer-dist && \
-                php artisan key:generate && \
-                php artisan test -p --log-junit coverage/tests.xml --coverage-clover coverage/coverage.xml  --colors=never
-                cd coverage && rm -f index.xml
+                php artisan key:generate && 
                 '''
             }
-            
+        }
+        stage('php test') {
+            steps {
+                sh 'php artisan test -p --log-junit coverage/tests.xml --coverage-clover coverage/coverage.xml  --colors=never'
+            }
             post {
                 always {
                     archiveArtifacts artifacts: 'coverage/tests.xml, coverage/coverage.xml', allowEmptyArchive: true
