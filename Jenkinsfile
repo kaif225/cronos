@@ -40,7 +40,7 @@ pipeline {
             }
             steps {
                 script {
-                    withSonarQubeEnv('sonar') {
+                    withSonarQubeEnv('sonarNew') {
                         sh "${scannerHome}/bin/sonar-scanner \
                              -Dsonar.projectKey=cronos \
                              -Dsonar.projectName=cronos \
