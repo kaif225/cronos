@@ -2,7 +2,7 @@ pipeline {
     agent {
                 docker {
                     image 'serversideup/php:8.3-cli'
-                    args '--user root -v /shared-volume:/shared'
+                    args '--user root'
                 }
             }
 
@@ -34,7 +34,7 @@ pipeline {
             agent {
                 docker {
                     image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root -v /shared-volume:/shared'
+                    args '--user root'
                 }
             }
             environment {
@@ -42,6 +42,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh "cp -r /var/jenkins_home/workspace/Cronos pipeline/coverage ."
                     withSonarQubeEnv('sonarNew') {
                         sh "${scannerHome}/bin/sonar-scanner \
                              -Dsonar.projectKey=cronos \
@@ -60,7 +61,7 @@ pipeline {
             agent {
                 docker {
                     image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root -v /shared-volume:/shared'
+                    args '--user root'
                 }
             }
             steps {
