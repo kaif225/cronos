@@ -2,7 +2,7 @@ pipeline {
     agent {
                 docker {
                     image 'serversideup/php:8.3-cli'
-                    args '--user root'
+                    args '--user root -v /shared-volume:/shared'
                 }
             }
 
@@ -34,7 +34,7 @@ pipeline {
             agent {
                 docker {
                     image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root'
+                    args '--user root -v /shared-volume:/shared'
                 }
             }
             environment {
@@ -60,7 +60,7 @@ pipeline {
             agent {
                 docker {
                     image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root'
+                    args '--user root -v /shared-volume:/shared'
                 }
             }
             steps {
