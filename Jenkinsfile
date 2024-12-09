@@ -19,6 +19,7 @@ pipeline {
                 composer install --no-interaction --prefer-dist && \
                 php artisan key:generate && \
                 php artisan test -p --log-junit coverage/tests.xml --coverage-xml coverage --colors=never
+                rm -f index.xml && mv clover.xml index.xml
                 '''
             }
             
