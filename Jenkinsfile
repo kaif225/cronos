@@ -13,6 +13,7 @@ pipeline {
             steps {
                 sh '''
                 install-php-extensions intl gd xsl pcov xdebug
+                echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20230831/xdebug.so" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
                 cp .env.example .env && \
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
