@@ -47,7 +47,7 @@ pipeline {
                              -Dsonar.projectName=cronos \
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0 \
-                             -Dsonar.php.coverage.reportPaths=coverage/index.xml \
+                             -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
                 }
