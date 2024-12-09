@@ -12,7 +12,7 @@ pipeline {
 
             steps {
                 sh '''
-                apk add --no-cache php8-xdebug
+                  apk update && apk add --no-cache php8-xdebug
 
                 # Enable Xdebug in PHP configuration
                 echo "zend_extension=xdebug.so" >> /etc/php8/conf.d/50_xdebug.ini
