@@ -34,13 +34,12 @@
         <report>
             <html outputDirectory="coverage_report/coverage"/>
             <text outputFile="coverage_report/coverage.txt"/>
-            <clover outputFile="coverage_report/logs/clover.xml"/>
+            <clover outputFile="coverage/clover.xml"/>
             <xml outputFile="coverage_report/coverage.xml"/>
         </report>
     </coverage>
 
     <logging>
         <junit outputFile="coverage_report/tests.xml"/>
-        <log type="coverage-xml" target="coverage/index.xml"/>
     </logging>
 </phpunit>
