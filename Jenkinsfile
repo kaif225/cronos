@@ -48,6 +48,7 @@ pipeline {
                              -Dsonar.projectName=cronos \
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0 \
+                             -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
                              -Dsonar.php.coverage.reportPaths=coverage/index.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
