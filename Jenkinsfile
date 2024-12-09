@@ -12,7 +12,7 @@ pipeline {
 
             steps {
                 sh '''
-                install-php-extensions intl gd xsl pcov xdebug
+                install-php-extensions intl gd xsl pcov
                 cp .env.example .env && \
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
