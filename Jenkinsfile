@@ -45,7 +45,7 @@ pipeline {
                              -Dsonar.projectKey=cronos \
                              -Dsonar.projectName=cronos \
                              -Dsonar.sources=. \
-                             -Dsonar.projectVersion=1.0"
+                             -Dsonar.projectVersion=1.0
                              -Dsonar.php.coverage.reportPaths=coverage/index.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
