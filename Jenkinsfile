@@ -18,7 +18,7 @@ pipeline {
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
                 composer install --no-interaction --prefer-dist && \
                 php artisan key:generate && \
-                php artisan test -p --log-junit coverage/tests.xml --coverage-xml coverage --colors=never
+                php artisan test -p --log-junit coverage/tests.xml --coverage-clover coverage/coverage.xml  --colors=never
                 cd coverage && rm -f index.xml
                 '''
             }
@@ -49,7 +49,7 @@ pipeline {
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0 \
                              -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
-                             -Dsonar.php.coverage.reportPaths=coverage/clover.xml \
+                             -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
                 }
