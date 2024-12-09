@@ -30,18 +30,4 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
-
-    <coverage>
-        <report>
-            <html outputDirectory="coverage_report/coverage"/>
-            <text outputFile="coverage_report/coverage.txt"/>
-            <clover outputFile="coverage_report/logs/clover.xml"/>
-            <xml outputFile="coverage_report/coverage.xml"/>
-        </report>
-    </coverage>
-
-    <logging>
-        <junit outputFile="coverage_report/logs/tests.xml"/>
-    </logging>
-
 </phpunit>
