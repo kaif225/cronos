@@ -25,7 +25,7 @@ pipeline {
             
             post {
                 always {
-                    archiveArtifacts artifacts: 'coverage/tests.xml, coverage/coverage.xml', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'coverage/tests.xml, coverage/index.xml', allowEmptyArchive: true
                 }
             }
         }
