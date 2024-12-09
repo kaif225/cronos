@@ -12,7 +12,7 @@ pipeline {
 
             steps {
                 sh '''
-                  docker-php-ext-install pcov && docker-php-ext-install
+                  docker-php-ext-install pcov && docker-php-ext-enable pcov
                 cp .env.example .env && \
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
