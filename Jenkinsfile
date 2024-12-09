@@ -5,14 +5,13 @@ pipeline {
         stage('PHP Test') {
             agent {
                 docker {
-                    image 'php:8.3-cli-alpine3.20'
+                    image 'serversideup/php:8.3-cli'
                     args '--user root'
                 }
             }
 
             steps {
                 sh '''
-                curl -fsSL https://github.com/mlocati/docker-php-extension-installer/raw/master/install-php-extensions.sh -o /usr/local/bin/install-php-extensions
                 install-php-extensions intl gd xsl pcov
                 cp .env.example .env && \
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
