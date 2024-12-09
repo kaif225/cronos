@@ -35,7 +35,6 @@
             <html outputDirectory="coverage_report/coverage"/>
             <text outputFile="coverage_report/coverage.txt"/>
             <clover outputFile="coverage/clover.xml"/>
-            <xml outputFile="coverage_report/coverage.xml"/>
         </report>
     </coverage>
 
