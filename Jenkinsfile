@@ -17,10 +17,16 @@ pipeline {
           composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
           composer install --no-interaction --prefer-dist && \
           php artisan key:generate && \
-          php artisan test
+          php artisan test -p --log-junit coverage/tests.xml --coverage-xml coverage --colors=never
           '''
-            }
+          
         }
+        
+        post {
+                always {
+                    archiveArtifacts artifacts: 'coverage/tests.xml, coverage/index.xml', allowEmptyArchive: true
+                }
+            }
 
         stage('Code Analysis') {
             agent {
@@ -40,6 +46,8 @@ pipeline {
                              -Dsonar.projectName=cronos \
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0"
+                             -Dsonar.php.coverage.reportPaths=coverage/index.xml \
+                             -Dsonar.php.tests.reportPath=coverage/tests.xml
                     }
                 }
             }
