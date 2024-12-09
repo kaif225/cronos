@@ -12,14 +12,13 @@ pipeline {
 
             steps {
                 sh '''
-                install-php-extensions intl gd xsl pcov
+                install-php-extensions intl gd xsl pcov xdebug
                 cp .env.example .env && \
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
                 composer install --no-interaction --prefer-dist && \
                 php artisan key:generate && \
                 php artisan test -p --log-junit coverage/tests.xml --coverage-xml coverage --colors=never
-                cd coverage && mv index.xml coverage.xml
                 '''
             }
             
@@ -48,7 +47,7 @@ pipeline {
                              -Dsonar.projectName=cronos \
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0 \
-                             -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
+                             -Dsonar.php.coverage.reportPaths=coverage/index.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
                 }
