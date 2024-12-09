@@ -30,4 +30,11 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
+    <logging>
+    <!-- JUnit test report -->
+    <junit outputFile="coverage/tests.xml"/>
+    
+    <!-- Code coverage XML report -->
+    <log type="coverage-xml" target="coverage/index.xml"/>
+</logging>
 </phpunit>
