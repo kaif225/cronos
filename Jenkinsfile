@@ -2,7 +2,7 @@ pipeline {
     agent none
 
     stages {
-        stage('php test') {
+        stage('PHP Test') {
             agent {
                 docker {
                     image 'php:8.3-cli-alpine3.20'
@@ -12,22 +12,21 @@ pipeline {
 
             steps {
                 sh '''
-          cp .env.example .env && \
-          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
-          composer install --no-interaction --prefer-dist && \
-          php artisan key:generate && \
-          php artisan test -p --log-junit coverage/tests.xml --coverage-xml coverage --colors=never
-          '''
-          
-        }
-    }      
-        
-        post {
+                cp .env.example .env && \
+                curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+                composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
+                composer install --no-interaction --prefer-dist && \
+                php artisan key:generate && \
+                php artisan test -p --log-junit coverage/tests.xml --coverage-xml coverage --colors=never
+                '''
+            }
+            
+            post {
                 always {
                     archiveArtifacts artifacts: 'coverage/tests.xml, coverage/index.xml', allowEmptyArchive: true
                 }
             }
+        }
 
         stage('Code Analysis') {
             agent {
@@ -53,6 +52,7 @@ pipeline {
                 }
             }
         }
+
         stage('Quality Gate') {
             agent {
                 docker {
@@ -62,7 +62,6 @@ pipeline {
             }
             steps {
                 script {
-                    // Wait for SonarQube analysis to complete and check Quality Gate status
                     timeout(time: 5, unit: 'MINUTES') {
                         def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
@@ -75,5 +74,4 @@ pipeline {
             }
         }
     }
- } 
-    
+}
