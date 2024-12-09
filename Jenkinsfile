@@ -19,13 +19,13 @@ pipeline {
                 composer install --no-interaction --prefer-dist && \
                 php artisan key:generate && \
                 php artisan test -p --log-junit coverage/tests.xml --coverage-xml coverage --colors=never
-                cd coverage && rm -f index.xml && mv clover.xml index.xml
+                cd coverage && rm -f index.xml
                 '''
             }
             
             post {
                 always {
-                    archiveArtifacts artifacts: 'coverage/tests.xml, coverage/index.xml', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'coverage/tests.xml, coverage/clover.xml', allowEmptyArchive: true
                 }
             }
         }
@@ -49,7 +49,7 @@ pipeline {
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0 \
                              -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
-                             -Dsonar.php.coverage.reportPaths=coverage/index.xml \
+                             -Dsonar.php.coverage.reportPaths=coverage/clover.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
                 }
