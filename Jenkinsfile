@@ -18,7 +18,7 @@ pipeline {
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
                 composer install --no-interaction --prefer-dist && \
                 php artisan key:generate && \
-                php artisan test -p --log-junit coverage/tests.xml --coverage-xml coverage --colors=never
+                php artisan test --coverage-xml=coverage/coverage.xml --log-junit=coverage/tests.xml --colors=never
                 '''
             }
             
