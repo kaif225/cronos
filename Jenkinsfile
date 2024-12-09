@@ -12,6 +12,12 @@ pipeline {
 
             steps {
                 sh '''
+                apk add --no-cache php8-xdebug
+
+                # Enable Xdebug in PHP configuration
+                echo "zend_extension=xdebug.so" >> /etc/php8/conf.d/50_xdebug.ini
+                echo "xdebug.mode=coverage" >> /etc/php8/conf.d/50_xdebug.ini
+                
                 cp .env.example .env && \
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
