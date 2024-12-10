@@ -42,7 +42,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "cp -r /var/jenkins_home/workspace/Cronos_pipeline/coverage/*"
+                    sh "cp -r /var/jenkins_home/workspace/Cronos_pipeline/coverage/* ."
                     withSonarQubeEnv('sonarNew') {
                         sh "${scannerHome}/bin/sonar-scanner \
                              -Dsonar.projectKey=cronos \
