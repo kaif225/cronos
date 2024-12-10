@@ -44,6 +44,7 @@ pipeline {
                 script {
                     sh "cp -r /var/jenkins_home/workspace/Cronos_pipeline/coverage ."
                     withSonarQubeEnv('sonarNew') {
+                        sh "rm -rf /opt/sonar-scanner/.sonar/cache/*"
                         sh "${scannerHome}/bin/sonar-scanner \
                              -Dsonar.projectKey=cronos \
                              -Dsonar.projectName=cronos \
@@ -53,7 +54,6 @@ pipeline {
                              -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
-                    sh "sleep 150"
                 }
             }
         }
