@@ -43,7 +43,6 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('sonarNew') {
-                        sh "rm -rf /opt/sonar-scanner/.sonar/cache/*"
                         sh "${scannerHome}/bin/sonar-scanner \
                              -Dsonar.projectKey=cronos \
                              -Dsonar.projectName=cronos \
