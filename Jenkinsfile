@@ -53,6 +53,7 @@ pipeline {
                              -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
+                    sh "sleep 150"
                 }
             }
         }
