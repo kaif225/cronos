@@ -34,7 +34,7 @@ pipeline {
             agent {
                 docker {
                     image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root --entrypoint sleep 300'
+                    args '--user root'
                 }
             }
             environment {
@@ -49,30 +49,10 @@ pipeline {
                              -Dsonar.projectName=cronos \
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0 \
+                             -Dsonar.qualitygate.wait=true \
                              -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
                              -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"      
-                    }
-                }
-            }
-        }
-
-        stage('Quality Gate') {
-            agent {
-                docker {
-                    image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root'
-                }
-            }
-            steps {
-                script {
-                    timeout(time: 5, unit: 'MINUTES') {
-                        def qg = waitForQualityGate()
-                        if (qg.status != 'OK') {
-                            echo "Quality Gate failed: ${qg.status}"
-                            echo "Full Quality Gate details: ${qg}"
-                            error "Pipeline failed due to quality gate failure: ${qg.status}"
-                        }
                     }
                 }
             }
