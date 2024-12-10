@@ -34,7 +34,7 @@ pipeline {
             agent {
                 docker {
                     image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root --entrypoint sleep 120'
+                    args '--user root --entrypoint sleep 300'
                 }
             }
             environment {
