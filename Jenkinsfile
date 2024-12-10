@@ -34,7 +34,7 @@ pipeline {
             agent {
                 docker {
                     image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root'
+                    args '--user root --entrypoint sleep 120'
                 }
             }
             environment {
@@ -42,7 +42,6 @@ pipeline {
             }
             steps {
                 script {
-                    sh "cp -r /var/jenkins_home/workspace/Cronos_pipeline/coverage ."
                     withSonarQubeEnv('sonarNew') {
                         sh "rm -rf /opt/sonar-scanner/.sonar/cache/*"
                         sh "${scannerHome}/bin/sonar-scanner \
@@ -52,8 +51,7 @@ pipeline {
                              -Dsonar.projectVersion=1.0 \
                              -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
                              -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
-                             -Dsonar.php.tests.reportPath=coverage/tests.xml"
-                       sh "sleep 120"      
+                             -Dsonar.php.tests.reportPath=coverage/tests.xml"      
                     }
                 }
             }
