@@ -53,6 +53,7 @@ pipeline {
                              -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
                              -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
+                       sh "sleep 120"      
                     }
                 }
             }
