@@ -50,6 +50,7 @@ pipeline {
                              -Dsonar.sources=. \
                              -Dsonar.projectVersion=1.0 \
                              -Dsonar.qualitygate.wait=true \
+                             -Dsonar.tests=tests \
                              -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
                              -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"      
