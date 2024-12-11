@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'serversideup/php:8.3-cli'
+            image 'sonarsource/sonar-scanner-cli:latest'
             args '--user root'
         }
     }
@@ -9,7 +9,19 @@ pipeline {
         stage('installing required packages') {
             steps {
                 sh '''
-                install-php-extensions -v intl gd xsl pcov
+                apt-get update && apt-get install -y \
+                    libicu-dev \
+                    libjpeg-dev \
+                    libpng-dev \
+                    libxsl-dev \
+                    libpcov-dev
+
+                # Install PHP extensions
+                docker-php-ext-install intl gd xsl pcov
+
+                # Enable the PHP extensions
+                docker-php-ext-enable intl gd xsl pcov
+                install-php-extensions intl gd xsl pcov
                 cp .env.example .env && \
                 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                 composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
