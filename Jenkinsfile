@@ -13,6 +13,7 @@ pipeline {
             libicu-dev \
             libjpeg-dev \
             libpng-dev \
+            git \
             libxslt1-dev  # Replace libxsl-dev with libxslt1-dev
         # Install PHP extensions
         docker-php-ext-install intl gd xsl
