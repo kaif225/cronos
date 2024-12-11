@@ -30,5 +30,17 @@ pipeline {
                 }
             }
         }
+        stage('quality gate') {
+        steps {
+          script {
+             def qg = waitForQualityGate()
+               if (qg.status != 'OK') {
+               echo "Quality Gate failed: ${qg.status}"
+               echo "Full Quality Gate details: ${qg}"
+               error "Pipeline failed due to quality gate failure: ${qg.status}"
+          
+          }
+        }
+      }  
     }
 }
