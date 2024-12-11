@@ -13,7 +13,6 @@ pipeline {
             
             steps {
                 script {
-                    sh "cp -r /var/jenkins_home/workspace/Cronos_pipeline/coverage ${WORKSPACE}"
                     withSonarQubeEnv('sonarNew') {
                         sh "${scannerHome}/bin/sonar-scanner \
                              -Dsonar.projectKey=cronos \
