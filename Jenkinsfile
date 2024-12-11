@@ -32,10 +32,10 @@ pipeline {
 
         stage('Code Analysis') {
             agent {
-                docker {
-                    image 'sonarsource/sonar-scanner-cli:latest'
-                    args '--user root'
-                }
+                label 'master'
+            }
+            environment {
+              SCANNER_HOME = tool 'sonar'
             }
             steps {
                 script {
