@@ -1,6 +1,5 @@
 pipeline {
-    agent any
-
+    agent none
     stages {
         stage('Code Analysis') {
             agent {
@@ -23,8 +22,13 @@ pipeline {
                              -Dsonar.tests=tests \
                              -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
                              -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
-                             -Dsonar.php.tests.reportPath=coverage/tests.xml"      
+                             -Dsonar.php.tests.reportPath=coverage/tests.xml"
                     }
+                }
+            }
+            post {
+                always {
+                    cleanWs()
                 }
             }
         }
@@ -41,11 +45,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            cleanWs()
-        }
-    }
 }
-
