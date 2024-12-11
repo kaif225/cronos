@@ -5,6 +5,9 @@ pipeline {
             args '--user root'
         }
     }
+    options {
+        ansiColor('xterm')
+    }
     stages {
         stage('installing required packages') {
             steps {
