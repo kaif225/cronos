@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'php:8.3-cli'
+            image 'serversideup/php:8.3-cli'
             args '--user root'
         }
     }
@@ -12,18 +12,7 @@ pipeline {
         stage('installing required packages') {
             steps {
                 sh '''
-        apt-get update && apt-get install -y \
-            libicu-dev \
-            libjpeg-dev \
-            libpng-dev \
-            git \
-            zip \
-            unzip \
-            libxslt1-dev  # Replace libxsl-dev with libxslt1-dev
-        # Install PHP extensions
-        docker-php-ext-install intl gd xsl 
-         pecl install pcov  
-        docker-php-ext-enable intl gd xsl pcov
+        install-php-extensions intl gd xsl pcov
         cp .env.example .env && \
         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
         composer config --no-plugins allow-plugins.phpstan/extension-installer true && \
