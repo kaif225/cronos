@@ -32,11 +32,12 @@ pipeline {
 
         stage('Code Analysis') {
             agent {
-                label 'master'
+                docker {
+                    image 'sonarsource/sonar-scanner-cli:latest'
+                    args '--user root'
+                }
             }
-            environment {
-              SCANNER_HOME = tool 'sonar'
-            }
+            
             steps {
                 script {
                     sh "cp -r /var/jenkins_home/workspace/Cronos_pipeline/coverage ${WORKSPACE}"
