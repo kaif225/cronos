@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'serversideup/php:8.3-cli'
+            image 'serversideup/php:8.4-cli'
             args '--user root'
         }
     }
