@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'sonarsource/sonar-scanner-cli:latest'
+            image 'serversideup/php:8.3-cli'
             args '--user root'
         }
     }
