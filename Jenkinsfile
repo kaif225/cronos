@@ -34,7 +34,7 @@ pipeline {
         }
         stage('php test') {
             steps {
-                sh 'export FORCE_COLOR=0 && php artisan test -p --log-junit coverage/tests.xml --coverage-clover coverage/coverage.xml  --colors=never'
+                sh 'php artisan test -p --log-junit coverage/tests.xml --coverage-clover coverage/coverage.xml  --colors=never'
             }
             post {
                 always {
