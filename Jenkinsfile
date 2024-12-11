@@ -5,9 +5,10 @@ pipeline {
             args '--user root'
         }
     }
-    stage('installing required packages') {
-        steps {
-            sh '''
+    stages {
+        stage('installing required packages') {
+            steps {
+                sh '''
         apt-get update && apt-get install -y \
             libicu-dev \
             libjpeg-dev \
@@ -23,33 +24,33 @@ pipeline {
         composer install --no-interaction --prefer-dist && \
         php artisan key:generate 
         '''
-        }
-    }
-    stage('php test') {
-        steps {
-            sh 'php artisan test -p --log-junit coverage/tests.xml --coverage-clover coverage/coverage.xml  --colors=never'
-        }
-        post {
-            always {
-                archiveArtifacts artifacts: 'coverage/tests.xml, coverage/coverage.xml', allowEmptyArchive: true
             }
         }
-    }
-    stage('Code Analysis') {
-        agent {
-            docker {
-                image 'sonarsource/sonar-scanner-cli:latest'
-                args '--user root'
+        stage('php test') {
+            steps {
+                sh 'php artisan test -p --log-junit coverage/tests.xml --coverage-clover coverage/coverage.xml  --colors=never'
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'coverage/tests.xml, coverage/coverage.xml', allowEmptyArchive: true
+                }
             }
         }
-        environment {
-            scannerHome = tool 'sonar'
-        }
-        steps {
-            script {
-                sh "cp -r /var/jenkins_home/workspace/Cronos_pipeline/coverage ${WORKSPACE}"
-                withSonarQubeEnv('sonarNew') {
-                    sh "${scannerHome}/bin/sonar-scanner \
+        stage('Code Analysis') {
+            agent {
+                docker {
+                    image 'sonarsource/sonar-scanner-cli:latest'
+                    args '--user root'
+                }
+            }
+            environment {
+                scannerHome = tool 'sonar'
+            }
+            steps {
+                script {
+                    sh "cp -r /var/jenkins_home/workspace/Cronos_pipeline/coverage ${WORKSPACE}"
+                    withSonarQubeEnv('sonarNew') {
+                        sh "${scannerHome}/bin/sonar-scanner \
                              -Dsonar.projectKey=cronos \
                              -Dsonar.projectName=cronos \
                              -Dsonar.sources=. \
@@ -58,26 +59,26 @@ pipeline {
                              -Dsonar.exclusions=vendor/**,node_modules/**,tests/**,coverage/**,coverage_report/** \
                              -Dsonar.php.coverage.reportPaths=coverage/coverage.xml \
                              -Dsonar.php.tests.reportPath=coverage/tests.xml"
+                    }
+                }
+            }
+            post {
+                always {
+                    cleanWs()
                 }
             }
         }
-        post {
-            always {
-                cleanWs()
-            }
-        }
-    }
-    stage('quality gate') {
-        steps {
-            script {
-                def qg = waitForQualityGate()
-                if (qg.status != 'OK') {
-                    echo "Quality Gate failed: ${qg.status}"
-                    echo "Full Quality Gate details: ${qg}"
-                    error "Pipeline failed due to quality gate failure: ${qg.status}"
+        stage('quality gate') {
+            steps {
+                script {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        echo "Quality Gate failed: ${qg.status}"
+                        echo "Full Quality Gate details: ${qg}"
+                        error "Pipeline failed due to quality gate failure: ${qg.status}"
+                    }
                 }
             }
         }
     }
-}
 }
