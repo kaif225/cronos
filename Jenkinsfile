@@ -44,3 +44,10 @@ pipeline {
     }
     }
 }
+
+post {
+always {
+  cleanWs()
+}
+}
+
