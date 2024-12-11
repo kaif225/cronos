@@ -31,9 +31,11 @@ pipeline {
         }
 
         stage('Code Analysis') {
-            agent any
-            environment {
-                scannerHome = tool 'sonar'
+            agent {
+                docker {
+                    image 'sonarsource/sonar-scanner-cli:latest'
+                    arg '--user root'
+                }
             }
             steps {
                 script {
