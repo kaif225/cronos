@@ -2,7 +2,6 @@ pipeline {
     agent none
 
     stages {
-        
         stage('Code Analysis') {
             agent {
                 docker {
@@ -30,24 +29,23 @@ pipeline {
             }
         }
         stage('quality gate') {
-        steps {
-          script {
-             def qg = waitForQualityGate()
-               if (qg.status != 'OK') {
-               echo "Quality Gate failed: ${qg.status}"
-               echo "Full Quality Gate details: ${qg}"
-               error "Pipeline failed due to quality gate failure: ${qg.status}"
-          
-          }
+            steps {
+                script {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        echo "Quality Gate failed: ${qg.status}"
+                        echo "Full Quality Gate details: ${qg}"
+                        error "Pipeline failed due to quality gate failure: ${qg.status}"
+                    }
+                }
+            }
         }
-      }  
     }
-    }
-}
 
-post {
-always {
-  cleanWs()
-}
+    post {
+        always {
+            cleanWs()
+        }
+    }
 }
 
