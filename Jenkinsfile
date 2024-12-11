@@ -18,7 +18,8 @@ pipeline {
             unzip \
             libxslt1-dev  # Replace libxsl-dev with libxslt1-dev
         # Install PHP extensions
-        docker-php-ext-install intl gd xsl pcov
+        docker-php-ext-install intl gd xsl 
+         pecl install pcov  
         docker-php-ext-enable intl gd xsl pcov
         cp .env.example .env && \
         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
