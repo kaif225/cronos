@@ -10,7 +10,9 @@ pipeline {
                     args '--user root'
                 }
             }
-            
+            environment {
+                scannerHome = tool 'sonar'
+            }
             steps {
                 script {
                     withSonarQubeEnv('sonarNew') {
