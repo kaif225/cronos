@@ -31,9 +31,7 @@ pipeline {
         }
 
         stage('Code Analysis') {
-            agent {
-               label 'master'
-            }
+            agent any
             environment {
                 scannerHome = tool 'sonar'
             }
